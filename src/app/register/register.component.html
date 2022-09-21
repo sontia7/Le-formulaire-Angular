@@ -3,34 +3,34 @@
         S'enregistrer
     </div>
             <div class="card-body">
-                <form novalidate (submit)="saveData(registerForm)" #registerForm ="ngForm">
+                <form novalidate (submit)="saveData()" [formGroup]="registerForm">
                     <div class="form row">
                         <div class="col-md-6 mb-3">
                             <label >Nom :</label>
-                            <input type="text" class="form-control" placeholder="Nom" [(ngModel)]="user.lastName" name="fistName"required minlength="4"
-                            #lastNameVar="ngModel" 
-                            [ngClass]="{'is-invalid': lastNameVar.touched && !lastNameVar.valid }">
+                            <input type="text" class="form-control" placeholder="Nom" required minlength="4"
+                           formControlName="lastName" 
+                            [ngClass]="{'is-invalid': registerForm.get('lastName')?.touched && !registerForm.get('lastName')?.valid }">
                                         <div class="invalid-feedback">
-                                            <span *ngIf="lastNameVar.errors">
+                                            <span *ngIf="registerForm.get('lastName')?.errors"> 
                                                     Veuilez entrer votre nom
-                                            </span>
-                                            <span *ngIf="lastNameVar.errors">
+                                             </span> 
+                                           <span *ngIf="registerForm.get('lastName')?.errors"> 
                                                 minimum 4 characteres
-                                        </span>
+                                         </span> 
                                         </div>
                         
                             
                         </div>
                         <div class="col-md-6 mb-3">
                                 <label >Prenom :</label>
-                                <input type="text" class="form-control" placeholder="prenom" [(ngModel)]="user.firstName" name = "lastName" required maxlength="20"
-                                #firstNameVar="ngModel"
-                                [ngClass]="{'is-invalid': firstNameVar.touched && !firstNameVar.valid }">
+                                <input type="text" class="form-control" placeholder="prenom"  required maxlength="20"
+                                formControlName="firstName" 
+                                [ngClass]="{'is-invalid': registerForm.get('firstName')?.touched && !registerForm.get('firstName')?.valid }">
                                 <div class="invalid-feedback">
-                                                <span *ngIf="firstNameVar.errors">
+                                                <span *ngIf="registerForm.get('firstName')?.errors">
                                                         Veuilez entrer votre prenom
                                                 </span>
-                                                <span *ngIf="firstNameVar.errors">
+                                                <span *ngIf="registerForm.get('firstName')?.errors">
                                                     maximum 20 characteres
                                             </span>
                                             </div>
@@ -42,13 +42,14 @@
                         <div class="form row">
                             <div class="col-md-6 mb-3">
                                 <label >E-mail :</label>
-                                <input type="email" class="form-control" placeholder="email" [(ngModel)]="user.email" name ="email" required email #emailVar ="ngModel"
-                                [ngClass]="{'is-invalid': emailVar.touched && !emailVar.valid }">
+                                <input type="email" class="form-control" placeholder="email"  required email 
+                                formControlName = "email"
+                                [ngClass]="{'is-invalid': registerForm.get('email')?.touched && !registerForm.get('email')?.valid }">
                                 <div class="invalid-feedback">
-                                    <span *ngIf="emailVar.errors"> 
+                                    <span *ngIf="registerForm.get('email')?.errors"> 
                                             Veuilez entrer votre email
                                     </span>
-                                    <span *ngIf="emailVar.errors"> 
+                                    <span *ngIf="registerForm.get('email')?.errors"> 
                                     l'mail n'est pas valide
                                 </span>
                                 </div>
@@ -58,14 +59,14 @@
                                         <div class="co-md-12">
                                             <div class="form-check mt-4 pt-3">
                                                 <label for="sendCatalogId" class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" [(ngModel)] = "user.sendCatalog" name="sendCatalog">
+                                                    <input type="checkbox" class="form-check-input" formControlName = "sendCatalog">
                                                     Oui, je souhaite recevoir la publicité
                                                 </label>
                                             </div>
                                         </div>
                                         
                                     </div>
-                                           <div *ngIf="user.sendCatalog">
+                                           <!-- <div *ngIf="user.sendCatalog"> -->
                                              <div class="form-row mb-3"> 
                                                 <div class="col-md-12">
                                                     <label for="">Adresse 1</label>
@@ -102,7 +103,7 @@
                                              </div>
 
 
-                                            </div>
+                                           
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-success" type="submit" [disabled] = "!registerForm.valid">
                             sauvegarder
@@ -112,3 +113,13 @@
                 
             </div>
 </div>
+
+<hr>
+
+<p> Dirty: {{registerForm.dirty}}</p>
+<p> Pristine: {{registerForm.pristine}}</p>
+<p> valid: {{registerForm.valid}}</p>
+<p> Invalid: {{registerForm.invalid}}</p>
+<p> Value: </p>
+
+<pre> {{registerForm.value | json}}</pre>
